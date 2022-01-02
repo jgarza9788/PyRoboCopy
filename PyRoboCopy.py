@@ -11,7 +11,7 @@ def runRoboCopy(src, dest,options):
     os.system("start cmd /c robocopy " + src + " " + dest + " " + options)
 
 # runRoboCopy(r"D:\Share",r"E:\Share","/S")
-# runRoboCopy(r"D:\Music",r"E:\Music","/S")
+runRoboCopy(r"D:\Music",r"E:\Music","/S")
 runRoboCopy(r"D:\Installers",r"E:\Installers","/S")
 runRoboCopy(r"D:\UnityProjects",r"E:\UnityProjects","/S")
 # runRoboCopy(r"D:\UnityProjects",r"E:\UnityProjects","/MIR")
