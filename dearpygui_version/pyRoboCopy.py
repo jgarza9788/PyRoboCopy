@@ -24,15 +24,17 @@ class JData():
         with open(self.file,'w') as file:
             file.write(json.dumps(self.data,indent=4))
 
+def run_all(data):
+    data = [d for d in data if d['enabled'] == True]
+    print(*data,sep='\n')
+
+    for d in data:
+        purge = '/MIR' if d['purge'] == 1 else '' 
+        print(purge)
+        os.system("start cmd /c robocopy " + d['src'] + " " + d['dest'] + " " + purge)
 
 class MainWindow():
     def save_callback(self,sender, app_data):
-        # print(sender)
-        # print(app_data)
-        # dpg.show
-        # dpg.configure_item("modal_id", show=False)
-        # dpg.delete_item("##commands")
-        # print('hello')
         self.do.save()
         dpg.delete_item("##commands")
         self.build_commands()
@@ -60,8 +62,27 @@ class MainWindow():
         self.index = 0
 
         dpg.create_context()
-        dpg.create_viewport(title="pyRoboCopy",width=1250,height=800)
+        dpg.create_viewport(title="pyRoboCopy",width=800,height=800)
         dpg.setup_dearpygui()
+
+        with dpg.theme() as disabled_theme:
+            with dpg.theme_component(dpg.mvAll):
+                dpg.add_theme_color(dpg.mvThemeCol_Text, [100, 100, 100])
+                dpg.add_theme_color(dpg.mvThemeCol_Button, [37, 37, 37])
+                dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, [100, 0, 0])
+        self.disabled_theme = disabled_theme
+
+        with dpg.theme() as main_button_theme:
+            with dpg.theme_component(dpg.mvAll):
+                # dpg.add_theme_color(dpg.mvThemeCol_Text, [255, 255, 255])
+                dpg.add_theme_color(dpg.mvThemeCol_Button, [0, 100, 255])
+                dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, [0, 200, 255])
+
+        with dpg.theme() as run_button_theme:
+            with dpg.theme_component(dpg.mvAll):
+                dpg.add_theme_color(dpg.mvThemeCol_Text, [0, 0, 0])
+                dpg.add_theme_color(dpg.mvThemeCol_Button, [0, 200, 0])
+                dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, [0, 100, 0])
 
         with dpg.window(label="Example Window",tag="Primary Window"):
             # dpg.set_title
@@ -69,31 +90,26 @@ class MainWindow():
             dpg.add_file_dialog(directory_selector=True, show=False, callback=self.change_folder_callback, tag='src')
             dpg.add_file_dialog(directory_selector=True, show=False, callback=self.change_folder_callback, tag='dest')
 
-            # with dpg.group(tag='##commands',parent='Primary Window'):
-            #     dpg.add_text("Hello world")
-            
             self.build_commands()
 
             with dpg.group(tag='buttons',parent='Primary Window',horizontal=True):
                 add_button = dpg.add_button(label=" + ", callback=self.add_new, tag='')
-                run_button = dpg.add_button(label="Run All", callback=self.run_all, tag='')
+                run_button = dpg.add_button(label="Run All", callback=lambda: run_all(self.do.data), tag='')
 
-            with dpg.theme() as main_button_theme:
-                with dpg.theme_component(dpg.mvAll):
-                    # dpg.add_theme_color(dpg.mvThemeCol_Text, [255, 255, 255])
-                    dpg.add_theme_color(dpg.mvThemeCol_Button, [0, 100, 255])
-                    dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, [0, 200, 255])
+                with dpg.tooltip(add_button):
+                    dpg.add_text('add new command')
+
+                with dpg.tooltip(run_button):
+                    dpg.add_text('run all enabled commands')
+
             dpg.bind_item_theme(add_button, main_button_theme)
-
-            with dpg.theme() as run_button_theme:
-                with dpg.theme_component(dpg.mvAll):
-                    dpg.add_theme_color(dpg.mvThemeCol_Text, [0, 0, 0])
-                    dpg.add_theme_color(dpg.mvThemeCol_Button, [0, 200, 0])
-                    dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, [0, 100, 0])
             dpg.bind_item_theme(run_button, run_button_theme)
 
-            self.refresh()
+            # with dpg.group(tag='buttons',parent='Primary Window',horizontal=True):
+            dpg.add_text('SRC, DEST, PURGE, ENABLE, REMOVE')
 
+            self.refresh()
+            
 
         dpg.set_primary_window("Primary Window", True)
         dpg.show_viewport()
@@ -103,7 +119,10 @@ class MainWindow():
     def build_commands(self):
         with dpg.group(tag='##commands',parent='Primary Window'):
             for index,data in enumerate(self.do.data):
-                self.create_row(str(index),data)
+                r = self.create_row(str(index),data)
+
+                if data['enabled'] == 0:
+                    dpg.bind_item_theme(r,self.disabled_theme)
 
     def add_new(self):
         self.do.data.append(
@@ -118,9 +137,6 @@ class MainWindow():
         self.do.save()
         self.refresh()
 
-    def run_all(self):
-        pass
-
     def edit_folder(self,tag,sd):
         self.index = int(tag)
         print(sd,self.do.data[self.index][sd])
@@ -128,54 +144,69 @@ class MainWindow():
         dpg.show_item(sd)
 
     def edit_boolean(self,tag,type,value):
-
         print(tag,value)
         self.index = int(tag)
         self.do.data[self.index][type] = value
         self.do.save()
         self.refresh()
 
+    def remove_item(self,tag):
+        print('remove: ',tag)
+        self.index = int(tag)
+        del self.do.data[self.index]
+        self.do.save()
+        self.refresh()
+
     def minimize_path(self,path):
-        if len(path) <= 3:
+        if len(path) <= 35:
             return path
         else: 
             return path[0:3] + '...\\' + path.split('\\')[-1]
 
     def create_row(self,tag,data):
-        with dpg.group(horizontal=True):
-            dpg.add_button(
-                label=data['src'],
+        with dpg.group(horizontal=True) as row:
+            src_button = dpg.add_button(
+                label=self.minimize_path(data['src']),
                 callback=lambda: self.edit_folder(tag,'src'),
-                width=500,
-                # tag=tag+'src',
+                width=250,
+                enabled = bool(data['enabled']),
                 )
+            
+            with dpg.tooltip(src_button):
+                dpg.add_text(data['src'])
 
-            dpg.add_button(
-                label=data['dest'], 
+            dest_button = dpg.add_button(
+                label=self.minimize_path(data['dest']),
                 callback=lambda: self.edit_folder(tag,'dest'),
-                width=500,
-                # tag=tag+'dest',
+                width=250,
+                enabled = bool(data['enabled']),
                 ) 
+            with dpg.tooltip(dest_button):
+                dpg.add_text(data['dest'])
 
-            dpg.add_checkbox(
+            purge_cb = dpg.add_checkbox(
                 label="purge",
                 default_value=bool(data['purge']), 
                 callback=lambda sender, data: self.edit_boolean(tag,'purge',dpg.get_value(sender)),
-                # tag=tag+'purge',
+                enabled = bool(data['enabled']),
                 )
-            dpg.add_checkbox(
+            with dpg.tooltip(purge_cb):
+                dpg.add_text('purge the destintion path')
+
+            enabled_cb = dpg.add_checkbox(
                 label="enabled",
                 default_value=bool(data['enabled']), 
                 callback=lambda sender, data: self.edit_boolean(tag,'enabled',dpg.get_value(sender)) ,
-                # tag=tag+'enabled',
                 )
+            with dpg.tooltip(enabled_cb):
+                dpg.add_text('will only run if enabled')
 
             dpg.add_button(
                 label='remove', 
-                callback=lambda: self.edit_folder(tag,'dest'),
-                # width=500,
-                # tag=tag+'dest',
+                callback=lambda: self.remove_item(tag),
                 ) 
+
+            return row
 
 
 if __name__ == "__main__":
