@@ -24,6 +24,48 @@
         "enabled": true
     },
     {
+        "src": "C:\\Users\\JGarza\\Google Drive",
+        "dest": "E:\\GoogleDrive_Backup",
+        "purge": false,
+        "enabled": true
+    },
+    {
+        "src": "D:\\Documents",
+        "dest": "F:\\Documents",
+        "purge": false,
+        "enabled": true
+    },
+    {
+        "src": "C:\\",
+        "dest": "C:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "C:\\",
+        "dest": "C:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "C:\\",
+        "dest": "C:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "C:\\",
+        "dest": "C:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "C:\\",
+        "dest": "C:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
         "src": "C:\\",
         "dest": "C:\\",
         "purge": false,

@@ -29,9 +29,11 @@ def run_all(data):
     print(*data,sep='\n')
 
     for d in data:
-        purge = '/MIR' if d['purge'] == 1 else '' 
-        print(purge)
-        os.system("start cmd /c robocopy " + d['src'] + " " + d['dest'] + " " + purge)
+        purge = '/MIR' if d['purge'] == 1 else '/S' 
+        # print(purge)
+        cmd = "start cmd /c robocopy \"" + d['src'] + "\" \"" + d['dest'] + "\" " + purge
+        # print(cmd)
+        os.system(cmd)
 
 class MainWindow():
     def save_callback(self,sender, app_data):
