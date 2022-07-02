@@ -19,6 +19,7 @@ with dpg.window(label="tutorial"):
     dpg.add_input_float(label="Input float", enabled=False)
     dpg.add_input_int(label="Input int", enabled=False)
 
+
 dpg.show_viewport()
 dpg.start_dearpygui()
 dpg.destroy_context()
