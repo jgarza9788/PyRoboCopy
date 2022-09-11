@@ -1,4 +1,6 @@
+from cgitb import enable
 import os, json
+import subprocess as sp
 
 # from dearpygui.core import get_value
 import dearpygui.dearpygui as dpg
@@ -25,15 +27,38 @@ class JData():
             file.write(json.dumps(self.data,indent=4))
 
 def run_all(data):
+
     data = [d for d in data if d['enabled'] == True]
     print(*data,sep='\n')
 
     for d in data:
-        purge = '/MIR' if d['purge'] == 1 else '/S' 
-        # print(purge)
-        cmd = "start cmd /c robocopy \"" + d['src'] + "\" \"" + d['dest'] + "\" " + purge
-        # print(cmd)
-        os.system(cmd)
+        
+        if os.path.exists(d['src']) and os.path.exists(d['dest']):
+
+            purge = '/MIR' if d['purge'] == 1 else '/S' 
+            # print(purge)
+            cmd = "start cmd /c robocopy \"" + d['src'] + "\" \"" + d['dest'] + "\" " + purge
+            # print(cmd)
+            os.system(cmd)
+        else:
+            msg = 'src and/or dest are not valid paths'
+            print(msg)
+            os.system('start cmd /c echo ' + msg)
+
+def get_drives():
+    command = "wmic logicaldisk get deviceid, volumename" 
+    pipe = sp.Popen(command,shell=True,stdout=sp.PIPE,stderr=sp.PIPE)    
+
+    result = ''
+    for line in pipe.stdout.readlines():
+        # print(line)
+        temp = str(line).replace('b\'','') 
+        temp = temp.replace('\\r\\r\\n\'','')
+        result += '\n' + temp
+    
+    return result + '\n'
+    
+
 
 class MainWindow():
     def save_callback(self,sender, app_data):
@@ -86,13 +111,27 @@ class MainWindow():
                 dpg.add_theme_color(dpg.mvThemeCol_Button, [0, 200, 0])
                 dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, [0, 100, 0])
 
+        with dpg.theme() as red_text_theme:
+            with dpg.theme_component(dpg.mvAll):
+                dpg.add_theme_color(dpg.mvThemeCol_Text, [255, 0, 0])
+        self.red_text_theme = red_text_theme
+
+                # dpg.add_theme_color(dpg.mvThemeCol_Button, [0, 200, 0])
+                # dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, [0, 100, 0])
+
         with dpg.window(label="Example Window",tag="Primary Window"):
             # dpg.set_title
 
-            dpg.add_file_dialog(directory_selector=True, show=False, callback=self.change_folder_callback, tag='src')
-            dpg.add_file_dialog(directory_selector=True, show=False, callback=self.change_folder_callback, tag='dest')
+            dpg.add_file_dialog(directory_selector=True, show=False, callback=self.change_folder_callback, tag='src'
+                ,width=500,height=500)
+            dpg.add_file_dialog(directory_selector=True, show=False, callback=self.change_folder_callback, tag='dest'
+                ,width=500,height=500)
 
             self.build_commands()
+
+            # shows a list of drives , with names
+            with dpg.group(tag='drives',parent='Primary Window',horizontal=True):
+                dpg.add_text(get_drives()) 
 
             with dpg.group(tag='buttons',parent='Primary Window',horizontal=True):
                 add_button = dpg.add_button(label=" + ", callback=self.add_new, tag='')
@@ -108,7 +147,7 @@ class MainWindow():
             dpg.bind_item_theme(run_button, run_button_theme)
 
             # with dpg.group(tag='buttons',parent='Primary Window',horizontal=True):
-            dpg.add_text('SRC, DEST, PURGE, ENABLE, REMOVE')
+            dpg.add_text('   , SRC, DEST, PURGE, ENABLE, REMOVE')
 
             self.refresh()
             
@@ -125,12 +164,14 @@ class MainWindow():
 
                 if data['enabled'] == 0:
                     dpg.bind_item_theme(r,self.disabled_theme)
+                
+
 
     def add_new(self):
         self.do.data.append(
             {
-                "src": "C:\\",
-                "dest": "C:\\",
+                "src": "X:\\",
+                "dest": "Y:\\",
                 "purge": False,
                 "enabled": False,
             }
@@ -167,30 +208,57 @@ class MainWindow():
 
     def create_row(self,tag,data):
         with dpg.group(horizontal=True) as row:
+
+            enabled = False
+            if bool(data['enabled']) and os.path.exists(data['src']) and os.path.exists(data['dest']):
+                enabled = True
+
+            missing_sd = True
+            if os.path.exists(data['src']) and os.path.exists(data['dest']):
+                missing_sd = False
+
+
+            if missing_sd:
+                err = dpg.add_text('[!]')
+                dpg.bind_item_theme(err, self.red_text_theme)
+
+                with dpg.tooltip(err):
+                    dpg.add_text('src or dest are  missing')
+            else:
+                x = dpg.add_text('   ')
+
+
             src_button = dpg.add_button(
                 label=self.minimize_path(data['src']),
                 callback=lambda: self.edit_folder(tag,'src'),
                 width=250,
                 enabled = bool(data['enabled']),
+                # enabled = enabled
                 )
             
             with dpg.tooltip(src_button):
                 dpg.add_text(data['src'])
+            if os.path.exists(data['src']) == False:
+                dpg.bind_item_theme(src_button,self.red_text_theme)
 
             dest_button = dpg.add_button(
                 label=self.minimize_path(data['dest']),
                 callback=lambda: self.edit_folder(tag,'dest'),
                 width=250,
                 enabled = bool(data['enabled']),
+                # enabled = enabled
                 ) 
             with dpg.tooltip(dest_button):
                 dpg.add_text(data['dest'])
+            if os.path.exists(data['dest']) == False:
+                dpg.bind_item_theme(dest_button,self.red_text_theme)
 
             purge_cb = dpg.add_checkbox(
                 label="purge",
                 default_value=bool(data['purge']), 
                 callback=lambda sender, data: self.edit_boolean(tag,'purge',dpg.get_value(sender)),
-                enabled = bool(data['enabled']),
+                # enabled = bool(data['enabled']),
+                enabled = enabled
                 )
             with dpg.tooltip(purge_cb):
                 dpg.add_text('purge the destintion path')
@@ -198,7 +266,9 @@ class MainWindow():
             enabled_cb = dpg.add_checkbox(
                 label="enabled",
                 default_value=bool(data['enabled']), 
+                # default_value=enabled,
                 callback=lambda sender, data: self.edit_boolean(tag,'enabled',dpg.get_value(sender)) ,
+                # enabled = ( missing_src == False and missing_dest == False )
                 )
             with dpg.tooltip(enabled_cb):
                 dpg.add_text('will only run if enabled')
@@ -206,13 +276,19 @@ class MainWindow():
             dpg.add_button(
                 label='remove', 
                 callback=lambda: self.remove_item(tag),
+                enabled = True
                 ) 
 
             return row
 
 
 if __name__ == "__main__":
+    # print(get_drives())
+
     MW = MainWindow()
+
+
+    
     # mp= minimize_path('C:\\Users\\JGarza\\StudioProjects')
     # print(mp)
 

@@ -9,7 +9,7 @@
         "src": "D:\\UnityProjects",
         "dest": "E:\\UnityProjects",
         "purge": false,
-        "enabled": true
+        "enabled": false
     },
     {
         "src": "D:\\Documents",
@@ -21,53 +21,101 @@
         "src": "D:\\Scripts",
         "dest": "E:\\Scripts",
         "purge": false,
-        "enabled": true
+        "enabled": false
     },
     {
         "src": "C:\\Users\\JGarza\\Google Drive",
         "dest": "E:\\GoogleDrive_Backup",
-        "purge": false,
+        "purge": true,
         "enabled": true
     },
     {
-        "src": "D:\\Documents",
-        "dest": "F:\\Documents",
-        "purge": false,
-        "enabled": true
-    },
-    {
-        "src": "C:\\",
-        "dest": "C:\\",
+        "src": "X:\\",
+        "dest": "Y:\\",
         "purge": false,
         "enabled": false
     },
     {
-        "src": "C:\\",
-        "dest": "C:\\",
+        "src": "X:\\",
+        "dest": "Y:\\",
         "purge": false,
         "enabled": false
     },
     {
-        "src": "C:\\",
-        "dest": "C:\\",
+        "src": "X:\\",
+        "dest": "Y:\\",
         "purge": false,
         "enabled": false
     },
     {
-        "src": "C:\\",
-        "dest": "C:\\",
+        "src": "X:\\",
+        "dest": "Y:\\",
         "purge": false,
         "enabled": false
     },
     {
-        "src": "C:\\",
-        "dest": "C:\\",
+        "src": "X:\\",
+        "dest": "Y:\\",
         "purge": false,
         "enabled": false
     },
     {
-        "src": "C:\\",
-        "dest": "C:\\",
+        "src": "X:\\",
+        "dest": "Y:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "X:\\",
+        "dest": "Y:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "X:\\",
+        "dest": "Y:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "X:\\",
+        "dest": "Y:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "X:\\",
+        "dest": "Y:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "X:\\",
+        "dest": "Y:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "X:\\",
+        "dest": "Y:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "X:\\",
+        "dest": "Y:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "X:\\",
+        "dest": "Y:\\",
+        "purge": false,
+        "enabled": false
+    },
+    {
+        "src": "X:\\",
+        "dest": "Y:\\",
         "purge": false,
         "enabled": false
     }
