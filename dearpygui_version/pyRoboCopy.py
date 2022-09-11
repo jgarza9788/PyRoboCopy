@@ -123,9 +123,13 @@ class MainWindow():
             # dpg.set_title
 
             dpg.add_file_dialog(directory_selector=True, show=False, callback=self.change_folder_callback, tag='src'
-                ,width=500,height=500)
+                ,label = 'source path'
+                ,modal = True
+                ,width=650,height=650)
             dpg.add_file_dialog(directory_selector=True, show=False, callback=self.change_folder_callback, tag='dest'
-                ,width=500,height=500)
+                ,label = 'destination path'
+                ,modal = True
+                ,width=650,height=650)
 
             self.build_commands()
 

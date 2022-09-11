@@ -14,9 +14,4 @@ with a dearpygui ui
 this one will require the dearpygui lib/module
 
 
-<!--
-remember to enable the environment
-activate PRC
--->
-
 

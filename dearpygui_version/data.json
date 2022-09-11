@@ -106,17 +106,5 @@
         "dest": "Y:\\",
         "purge": false,
         "enabled": false
-    },
-    {
-        "src": "X:\\",
-        "dest": "Y:\\",
-        "purge": false,
-        "enabled": false
-    },
-    {
-        "src": "X:\\",
-        "dest": "Y:\\",
-        "purge": false,
-        "enabled": false
     }
 ]
