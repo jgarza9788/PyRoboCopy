@@ -30,33 +30,33 @@
         "enabled": true
     },
     {
-        "src": "X:\\",
-        "dest": "Y:\\",
+        "src": "D:\\Music",
+        "dest": "F:\\Music",
         "purge": false,
         "enabled": false
     },
     {
-        "src": "X:\\",
-        "dest": "Y:\\",
+        "src": "D:\\UnityProjects",
+        "dest": "F:\\UnityProjects",
         "purge": false,
         "enabled": false
     },
     {
-        "src": "X:\\",
-        "dest": "Y:\\",
+        "src": "D:\\Documents",
+        "dest": "F:\\Documents",
         "purge": false,
         "enabled": false
     },
     {
-        "src": "X:\\",
-        "dest": "Y:\\",
+        "src": "D:\\Scripts",
+        "dest": "F:\\Scripts",
         "purge": false,
         "enabled": false
     },
     {
-        "src": "X:\\",
-        "dest": "Y:\\",
-        "purge": false,
+        "src": "C:\\Users\\JGarza\\Google Drive",
+        "dest": "F:\\GoogleDrive_Backup",
+        "purge": true,
         "enabled": false
     },
     {

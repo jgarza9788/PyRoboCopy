@@ -33,7 +33,7 @@ def run_all(data):
 
     for d in data:
         
-        if os.path.exists(d['src']) and os.path.exists(d['dest']):
+        if os.path.exists(d['src'][:3]) and os.path.exists(d['dest'][:3]):
 
             purge = '/MIR' if d['purge'] == 1 else '/S' 
             # print(purge)
@@ -67,14 +67,19 @@ class MainWindow():
         self.build_commands()
 
     def change_folder_callback(self,sender, app_data):
+        try:
 
-        print('index: ',self.index)
-        print("Sender: ", sender)
-        print("App Data: ", app_data)
+            print('index: ',self.index)
+            print("Sender: ", sender)
+            print("App Data: ", app_data)
 
-        self.do.data[self.index][sender] = app_data['file_path_name']
-        self.do.save()
-        self.refresh()
+            self.do.data[self.index][sender] = app_data['file_path_name']
+            self.do.save()
+            self.refresh()
+        except Exception as e:
+            print('sorry error!')
+            print(str(e))
+            
 
 
     def refresh(self):
@@ -214,11 +219,11 @@ class MainWindow():
         with dpg.group(horizontal=True) as row:
 
             enabled = False
-            if bool(data['enabled']) and os.path.exists(data['src']) and os.path.exists(data['dest']):
+            if bool(data['enabled']) and os.path.exists(data['src'][:3]) and os.path.exists(data['dest'][:3]):
                 enabled = True
 
             missing_sd = True
-            if os.path.exists(data['src']) and os.path.exists(data['dest']):
+            if os.path.exists(data['src'][:3]) and os.path.exists(data['dest'][:3]):
                 missing_sd = False
 
 
@@ -227,7 +232,7 @@ class MainWindow():
                 dpg.bind_item_theme(err, self.red_text_theme)
 
                 with dpg.tooltip(err):
-                    dpg.add_text('src or dest are  missing')
+                    dpg.add_text('drive might be missing')
             else:
                 x = dpg.add_text('   ')
 
@@ -242,7 +247,7 @@ class MainWindow():
             
             with dpg.tooltip(src_button):
                 dpg.add_text(data['src'])
-            if os.path.exists(data['src']) == False:
+            if os.path.exists(data['src'][:3]) == False:
                 dpg.bind_item_theme(src_button,self.red_text_theme)
 
             dest_button = dpg.add_button(
@@ -254,7 +259,7 @@ class MainWindow():
                 ) 
             with dpg.tooltip(dest_button):
                 dpg.add_text(data['dest'])
-            if os.path.exists(data['dest']) == False:
+            if os.path.exists(data['dest'][:3]) == False:
                 dpg.bind_item_theme(dest_button,self.red_text_theme)
 
             purge_cb = dpg.add_checkbox(
@@ -290,6 +295,8 @@ if __name__ == "__main__":
     # print(get_drives())
 
     MW = MainWindow()
+
+    # print('123456789'[:3])
 
 
     
