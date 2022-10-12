@@ -3,7 +3,7 @@
         "src": "D:\\Music",
         "dest": "E:\\Music",
         "purge": false,
-        "enabled": true
+        "enabled": false
     },
     {
         "src": "D:\\UnityProjects",
@@ -15,7 +15,7 @@
         "src": "D:\\Documents",
         "dest": "E:\\Documents",
         "purge": false,
-        "enabled": true
+        "enabled": false
     },
     {
         "src": "D:\\Scripts",
@@ -27,7 +27,7 @@
         "src": "C:\\Users\\JGarza\\Google Drive",
         "dest": "E:\\GoogleDrive_Backup",
         "purge": true,
-        "enabled": true
+        "enabled": false
     },
     {
         "src": "D:\\Music",
@@ -38,13 +38,13 @@
     {
         "src": "D:\\UnityProjects",
         "dest": "F:\\UnityProjects",
-        "purge": false,
+        "purge": true,
         "enabled": false
     },
     {
         "src": "D:\\Documents",
         "dest": "F:\\Documents",
-        "purge": false,
+        "purge": true,
         "enabled": false
     },
     {
@@ -60,7 +60,7 @@
         "enabled": false
     },
     {
-        "src": "X:\\",
+        "src": "C:\\Users\\JGarza\\Pictures",
         "dest": "Y:\\",
         "purge": false,
         "enabled": false
