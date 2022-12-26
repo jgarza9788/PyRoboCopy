@@ -33,31 +33,31 @@
         "src": "D:\\Music",
         "dest": "F:\\Music",
         "purge": false,
-        "enabled": false
+        "enabled": true
     },
     {
         "src": "D:\\UnityProjects",
         "dest": "F:\\UnityProjects",
         "purge": true,
-        "enabled": false
+        "enabled": true
     },
     {
         "src": "D:\\Documents",
         "dest": "F:\\Documents",
         "purge": true,
-        "enabled": false
+        "enabled": true
     },
     {
         "src": "D:\\Scripts",
         "dest": "F:\\Scripts",
         "purge": false,
-        "enabled": false
+        "enabled": true
     },
     {
         "src": "C:\\Users\\JGarza\\Google Drive",
         "dest": "F:\\GoogleDrive_Backup",
         "purge": true,
-        "enabled": false
+        "enabled": true
     },
     {
         "src": "C:\\Users\\JGarza\\Pictures",
