@@ -20,13 +20,13 @@
     {
         "src": "D:\\Scripts",
         "dest": "E:\\Scripts",
-        "purge": true,
+        "purge": false,
         "enabled": true
     },
     {
         "src": "C:\\Users\\JGarza\\Google Drive",
         "dest": "E:\\GoogleDrive_Backup",
-        "purge": true,
+        "purge": false,
         "enabled": true
     },
     {
@@ -36,10 +36,10 @@
         "enabled": true
     },
     {
-        "src": "X:\\",
-        "dest": "Y:\\",
+        "src": "D:\\PSDs",
+        "dest": "E:\\PSDs",
         "purge": false,
-        "enabled": false
+        "enabled": true
     },
     {
         "src": "X:\\",

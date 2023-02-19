@@ -145,6 +145,7 @@ class MainWindow():
             with dpg.group(tag='buttons',parent='Primary Window',horizontal=True):
                 add_button = dpg.add_button(label=" + ", callback=self.add_new, tag='')
                 run_button = dpg.add_button(label="Run All", callback=lambda: run_all(self.do.data), tag='')
+                refresh_button = dpg.add_button(label="refresh", callback=self.refresh, tag='')
 
                 with dpg.tooltip(add_button):
                     dpg.add_text('add new command')
