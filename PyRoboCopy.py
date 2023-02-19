@@ -13,9 +13,9 @@ def runRoboCopy(src, dest,options):
 # runRoboCopy(r"D:\Share",r"E:\Share","/S")
 # runRoboCopy(r"D:\Music",r"E:\Music","/S")
 # runRoboCopy(r"D:\Installers",r"E:\Installers","/S")
-runRoboCopy(r"D:\UnityProjects",r"E:\UnityProjects","/S")
+# runRoboCopy(r"D:\UnityProjects",r"E:\UnityProjects","/S")
 # runRoboCopy(r"D:\UnityProjects",r"E:\UnityProjects","/MIR")
-runRoboCopy(r"D:\Documents",r"E:\Documents","/S")
+# runRoboCopy(r"D:\Documents",r"E:\Documents","/S")
 # runRoboCopy(r"D:\Scripts",r"E:\Scripts","/S")
 # runRoboCopy(r"D:\Scripts",r"E:\Scripts","/MIR")
 
