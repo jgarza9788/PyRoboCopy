@@ -3,96 +3,119 @@
         "src": "D:\\Music",
         "dest": "E:\\Music",
         "purge": false,
-        "enabled": true
+        "enabled": false,
+        "status": "i"
     },
     {
         "src": "D:\\UnityProjects",
         "dest": "E:\\UnityProjects",
         "purge": true,
-        "enabled": true
+        "enabled": false,
+        "status": "i"
     },
     {
         "src": "D:\\Documents",
         "dest": "E:\\Documents",
         "purge": false,
-        "enabled": true
+        "enabled": false,
+        "status": "i"
     },
     {
         "src": "D:\\Scripts",
         "dest": "E:\\Scripts",
         "purge": false,
-        "enabled": true
+        "enabled": false,
+        "status": "i"
     },
     {
         "src": "C:\\Users\\JGarza\\Google Drive",
         "dest": "E:\\GoogleDrive_Backup",
         "purge": false,
-        "enabled": true
+        "enabled": false,
+        "status": "i"
     },
     {
         "src": "C:\\Users\\JGarza\\MiscGames",
         "dest": "E:\\MiscGames",
         "purge": false,
-        "enabled": true
+        "enabled": false,
+        "status": "i"
     },
     {
         "src": "D:\\PSDs",
         "dest": "E:\\PSDs",
         "purge": false,
-        "enabled": true
+        "enabled": false,
+        "status": "i"
     },
     {
         "src": "X:\\",
         "dest": "Y:\\",
         "purge": false,
-        "enabled": false
+        "enabled": false,
+        "status": "d"
     },
     {
         "src": "D:\\Music",
         "dest": "F:\\Music",
         "purge": true,
-        "enabled": false
+        "enabled": false,
+        "status": "d"
     },
     {
         "src": "D:\\UnityProjects",
         "dest": "F:\\UnityProjects",
         "purge": false,
-        "enabled": false
+        "enabled": false,
+        "status": "d"
     },
     {
         "src": "D:\\Documents",
         "dest": "F:\\Documents",
         "purge": false,
-        "enabled": false
+        "enabled": false,
+        "status": "d"
     },
     {
         "src": "D:\\Scripts",
         "dest": "F:\\Scripts",
         "purge": false,
-        "enabled": false
+        "enabled": false,
+        "status": "d"
     },
     {
         "src": "C:\\Users\\JGarza\\Google Drive",
         "dest": "F:\\GoogleDrive_Backup",
         "purge": false,
-        "enabled": false
+        "enabled": false,
+        "status": "d"
     },
     {
         "src": "C:\\Users\\JGarza\\MiscGames",
         "dest": "F:\\MiscGames",
         "purge": false,
-        "enabled": false
+        "enabled": false,
+        "status": "d"
     },
     {
         "src": "D:\\PSDs",
         "dest": "F:\\PSDs",
         "purge": false,
-        "enabled": false
+        "enabled": false,
+        "status": "d"
     },
     {
         "src": "X:\\",
         "dest": "Y:\\",
         "purge": false,
-        "enabled": false
+        "enabled": false,
+        "status": "d"
+    },
+    {
+        "src": "C:\\Users\\JGarza\\Desktop\\New folder",
+        "dest": "C:\\Users\\JGarza\\Desktop\\New folder (2)",
+        "purge": false,
+        "enabled": false,
+        "status": "nr"
     }
 ]
