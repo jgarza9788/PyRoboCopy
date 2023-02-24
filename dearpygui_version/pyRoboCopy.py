@@ -37,7 +37,13 @@ def run_all(data):
 
             purge = '/MIR' if d['purge'] == 1 else '/S' 
             # print(purge)
-            cmd = "start cmd /c robocopy \"" + d['src'] + "\" \"" + d['dest'] + "\" " + purge
+
+            # normal terminal 
+            # cmd = "start cmd /c robocopy \"" + d['src'] + "\" \"" + d['dest'] + "\" " + purge
+
+            # windows terminal
+            cmd = "start wt -p \"pwsh\"  robocopy \"" + d['src'] + "\" \"" + d['dest'] + "\" " + purge
+            
             # print(cmd)
             os.system(cmd)
         else:

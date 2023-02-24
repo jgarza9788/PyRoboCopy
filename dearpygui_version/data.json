@@ -110,12 +110,5 @@
         "purge": false,
         "enabled": false,
         "status": "d"
-    },
-    {
-        "src": "C:\\Users\\JGarza\\Desktop\\New folder",
-        "dest": "C:\\Users\\JGarza\\Desktop\\New folder (2)",
-        "purge": false,
-        "enabled": false,
-        "status": "nr"
     }
 ]
