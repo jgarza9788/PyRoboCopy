@@ -2,8 +2,15 @@
 import os, json
 import subprocess as sp
 
-# from dearpygui.core import get_value
 import dearpygui.dearpygui as dpg
+
+import logging 
+import logging.config
+
+
+logging.basicConfig(filename='log',format='%(asctime)s | %(levelname)s | %(message)s', encoding='utf-8', filemode='w', level=logging.DEBUG)
+
+
 
 class JData():
     def __init__(self,file=None,default=[]):
@@ -12,12 +19,15 @@ class JData():
             directory = os.path.dirname(os.path.realpath(__file__))
             self.file = os.path.join(directory,'data.json')
         self.data = self.load()
+        logging.info('init Json Data Object --> JData')
 
     def load(self):
+        logging.info('loading Json data')
         try:
             with open(self.file,'r') as file:
                 return json.load(file)
         except:
+            logging.error('error, while loading json file')
             self.data = self.default
             self.save()
             return self.data
@@ -25,8 +35,10 @@ class JData():
     def save(self):
         with open(self.file,'w') as file:
             file.write(json.dumps(self.data,indent=4))
+            logging.info(f'saved file {self.file}')
 
 def run_all(data):
+    logging.info('running all commands')
 
     data = [d for d in data if d['enabled'] == True]
     print(*data,sep='\n')
@@ -43,15 +55,19 @@ def run_all(data):
 
             # windows terminal
             cmd = "start wt -p \"pwsh\"  robocopy \"" + d['src'] + "\" \"" + d['dest'] + "\" " + purge
+
+            logging.info(f'running: {cmd}')
             
             # print(cmd)
             os.system(cmd)
         else:
+            logging.error(f'error while running: {str(d)}')
             msg = 'src and/or dest are not valid paths'
             print(msg)
             os.system('start cmd /c echo ' + msg)
 
 def get_drives():
+    logging.info('getting list of all drives')
     command = "wmic logicaldisk get deviceid, volumename" 
     pipe = sp.Popen(command,shell=True,stdout=sp.PIPE,stderr=sp.PIPE)    
 
@@ -61,6 +77,7 @@ def get_drives():
         temp = str(line).replace('b\'','') 
         temp = temp.replace('\\r\\r\\n\'','')
         result += '\n' + temp
+        logging.info(f'found drive: {temp}')
     
     return result + '\n'
     
@@ -71,9 +88,11 @@ class MainWindow():
         self.do.save()
         dpg.delete_item("##commands")
         self.build_commands()
+        logging.info('saved data')
 
     def change_folder_callback(self,sender, app_data):
         try:
+            logging.info('change_folder_callback')
 
             print('index: ',self.index)
             print("Sender: ", sender)
@@ -83,6 +102,7 @@ class MainWindow():
             self.do.save()
             self.refresh()
         except Exception as e:
+            logging.error('change_folder_callback')
             print('sorry error!')
             print(str(e))
             
@@ -90,12 +110,17 @@ class MainWindow():
 
     def refresh(self):
         try:
+            logging.info('refresh()')
             dpg.delete_item("##commands")
             self.build_commands()
         except:
+            logging.error('refresh()')
             pass
 
     def __init__(self):
+
+        logging.info('start - init')
+
         self.do = JData()
         self.index = 0
 
@@ -174,6 +199,7 @@ class MainWindow():
         dpg.destroy_context()
 
     def build_commands(self):
+        logging.info('building the list')
         with dpg.group(tag='##commands',parent='Primary Window'):
             for index,data in enumerate(self.do.data):
                 r = self.create_row(str(index),data)
@@ -184,6 +210,7 @@ class MainWindow():
 
 
     def add_new(self):
+        logging.info('add new item to list')
         self.do.data.append(
             {
                 "src": "X:\\",
@@ -197,12 +224,14 @@ class MainWindow():
         self.refresh()
 
     def edit_folder(self,tag,sd):
+        logging.info(f'edit_folder({tag},{sd})')
         self.index = int(tag)
         print(sd,self.do.data[self.index][sd])
         dpg.configure_item(sd,default_path=self.do.data[self.index][sd])
         dpg.show_item(sd)
 
     def edit_boolean(self,tag,type,value):
+        logging.info(f'edit_boolean({tag},{type},{value})')
         print(tag,value)
         self.index = int(tag)
         self.do.data[self.index][type] = value
@@ -210,6 +239,7 @@ class MainWindow():
         self.refresh()
 
     def remove_item(self,tag):
+        logging.info(f'remove_item({tag})')
         print('remove: ',tag)
         self.index = int(tag)
         del self.do.data[self.index]
@@ -217,12 +247,15 @@ class MainWindow():
         self.refresh()
 
     def minimize_path(self,path):
+        # logging.info(f'minimize_path({path})')
         if len(path) <= 35:
             return path
         else: 
             return path[0:3] + '...\\' + path.split('\\')[-1]
 
     def create_row(self,tag,data):
+        logging.info(f'create_row({tag},{str(data)})')
+
         with dpg.group(horizontal=True) as row:
 
             enabled = False
@@ -299,15 +332,6 @@ class MainWindow():
 
 
 if __name__ == "__main__":
-    # print(get_drives())
-
     MW = MainWindow()
-
-    # print('123456789'[:3])
-
-
-    
-    # mp= minimize_path('C:\\Users\\JGarza\\StudioProjects')
-    # print(mp)
 
 
