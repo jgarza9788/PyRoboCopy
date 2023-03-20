@@ -3,49 +3,49 @@
         "src": "D:\\Music",
         "dest": "E:\\Music",
         "purge": false,
-        "enabled": false,
+        "enabled": true,
         "status": "i"
     },
     {
         "src": "D:\\UnityProjects",
         "dest": "E:\\UnityProjects",
         "purge": true,
-        "enabled": false,
+        "enabled": true,
         "status": "i"
     },
     {
         "src": "D:\\Documents",
         "dest": "E:\\Documents",
         "purge": false,
-        "enabled": false,
+        "enabled": true,
         "status": "i"
     },
     {
         "src": "D:\\Scripts",
         "dest": "E:\\Scripts",
         "purge": false,
-        "enabled": false,
+        "enabled": true,
         "status": "i"
     },
     {
         "src": "C:\\Users\\JGarza\\Google Drive",
         "dest": "E:\\GoogleDrive_Backup",
         "purge": false,
-        "enabled": false,
+        "enabled": true,
         "status": "i"
     },
     {
         "src": "C:\\Users\\JGarza\\MiscGames",
         "dest": "E:\\MiscGames",
         "purge": false,
-        "enabled": false,
+        "enabled": true,
         "status": "i"
     },
     {
         "src": "D:\\PSDs",
         "dest": "E:\\PSDs",
         "purge": false,
-        "enabled": false,
+        "enabled": true,
         "status": "i"
     },
     {
